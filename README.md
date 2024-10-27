@@ -1,66 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Site de Pizzeria
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Ce site permet de commander des pizzas à emporter, avec trois types d'acteurs : les utilisateurs, le gérant (administrateur) du site et le pizzaiolo.
 
-## About Laravel
+## Introduction
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Les utilisateurs** : peuvent parcourir la liste des pizzas, les ajouter au panier, passer une commande et suivre le statut de celle-ci.
+- **Le gérant (administrateur)** : peut ajouter/modifier des pizzas, voir l’état des commandes, et gérer la recette du jour.
+- **Le pizzaiolo** : peut voir les commandes dans l’ordre d’arrivée et mettre à jour leur statut.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Méthodes
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Administrateur
 
-## Learning Laravel
+#### Gestion des pizzas :
+- Ajouter une nouvelle pizza.
+- Voir la liste des pizzas.
+- Modifier le descriptif ou le nom d’une pizza.
+- « Supprimer » une pizza (si elle a déjà été commandée, suppression avec **SoftDelete** uniquement).
+- Mettre à jour l’image associée à la pizza (lors de l’ajout ou de la modification).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Gestion des commandes :
+- Afficher les commandes pour une date donnée.
+- Afficher les commandes du jour, triées par statut et date.
+- Afficher toutes les commandes (avec pagination).
+- Afficher la recette du jour.
+- Voir le détail d’une commande (pizzas commandées et prix total).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### Gestion des utilisateurs :
+- Changer son mot de passe.
+- Créer un administrateur ou un pizzaiolo.
+- Changer le mot de passe du pizzaiolo.
+- Supprimer un utilisateur (admin ou pizzaiolo).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Pizzaiolo
 
-## Laravel Sponsors
+- Voir la liste des commandes non traitées (triées par heure d’arrivée).
+- Voir le détail des commandes non traitées.
+- Mettre à jour le statut de la commande (en traitement, prête, récupérée).
+- Changer son mot de passe.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Utilisateurs
 
-### Premium Partners
+#### Gestion du compte :
+- Création de compte.
+- Changement de mot de passe.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+#### Commande de pizzas :
+- Parcourir la liste des pizzas (avec pagination).
+- Ajouter des pizzas dans le panier.
+- Modifier la quantité des pizzas dans le panier.
+- Supprimer des pizzas du panier.
+- Afficher le prix total et passer la commande.
 
-## Contributing
+#### Gestion des commandes :
+- Voir la liste des commandes passées, triées par date (avec pagination).
+- Voir le détail de chaque commande (pizzas et prix total).
+- Voir les commandes non récupérées (statuts : envoyé, en traitement, prête).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Base de Données
 
-## Code of Conduct
+- **users** : (id, nom, prenom, login, mdp, type)
+- **pizzas** : (id, nom, description, prix, created_at, updated_at, deleted_at)
+- **commandes** : (id, user_id, statut, created_at, updated_at)
+- **commande_pizza** : (commande_id, pizza_id, qte)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Outils Utilisés
 
-## Security Vulnerabilities
+- **Framework** : Laravel
+- **Langages** : PHP, HTML, CSS
+- **Base de données** : SQLite
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Utilisation
 
-## License
+1. **Clonez le dépôt :**
+   ```bash
+   git clone https://github.com/nassimug/Pizza
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
