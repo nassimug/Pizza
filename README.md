@@ -72,7 +72,18 @@ Ce site permet de commander des pizzas à emporter, avec trois types d'acteurs :
 
 ## Utilisation
 
-1. **Clonez le dépôt :**
-   ```bash
-   git clone https://github.com/nassimug/Pizza
+1. **Clonez le dépôt :** `git clone https://github.com/nassimug/Pizza`
+
+2. **Naviguez dans le répertoire du projet :** `cd Pizza`
+
+3. **Installez les dépendances :** `composer install`
+
+4. **Configuration de l'environnement :** - Copiez le fichier d'exemple d'environnement : `cp .env.example .env` - Générez la clé de l'application : `php artisan key:generate` - Mettez à jour le fichier `.env` avec les informations de votre base de données.
+
+5. **Migration de la base de données :** `php artisan migrate`
+
+6. **Lancez l'application :** `php artisan serve`
+
+7. **Accédez à l'application :** - Ouvrez votre navigateur et allez à : [http://localhost:8000](http://localhost:8000)
+
 
